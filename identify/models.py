@@ -21,6 +21,9 @@ class Contact(models.Model):
             models.Index(fields=['phoneNumber']),
             models.Index(fields=['linkedId']),
         ]
+        constraints = [
+            models.UniqueConstraint(fields=['email', 'phoneNumber'], name='unique_email_phoneNumber')
+        ]
 
     def __str__(self):
         return f"Contact {self.id} - {self.email or self.phoneNumber}"
