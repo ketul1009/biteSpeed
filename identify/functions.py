@@ -2,9 +2,9 @@ from identify.models import Contact
 from django.db.models import Q
 from typing import List
 
-def get_primary_contacts(email: str, phoneNumber: str) -> List[Contact]:
-    primary_contacts = Contact.objects.filter(Q(email=email) | Q(phoneNumber=phoneNumber), linkPrecedence='primary')
-    return primary_contacts
+def get_all_contacts(email: str, phoneNumber: str) -> List[Contact]:
+    all_contacts = Contact.objects.filter(Q(email=email) | Q(phoneNumber=phoneNumber))
+    return all_contacts
     
 def check_if_contact_exists(email: str, phoneNumber: str) -> bool:
     return Contact.objects.filter(Q(email=email) & Q(phoneNumber=phoneNumber)).exists()
@@ -41,3 +41,11 @@ def update_primary_contact(contact: Contact, linkedId: Contact) -> Contact:
     contact.linkedId = linkedId
     contact.save()
     return contact
+
+def check_if_new_info(email: str, phoneNumber: str) -> bool:
+    all_contacts = Contact.objects.filter(Q(email=email) | Q(phoneNumber=phoneNumber))
+    emails = set(c.email for c in all_contacts if c.email)
+    phoneNumbers = set(c.phoneNumber for c in all_contacts if c.phoneNumber)
+    if (email and email not in emails) or (phoneNumber and phoneNumber not in phoneNumbers):
+        return True
+    return False
