@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-i6lq3o@x!d4f8j7kgjuh&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['.fly.dev', os.environ.get('FLY_APP_NAME') + '.fly.dev']  # Update this with your actual domain in production
+ALLOWED_HOSTS = ['.fly.dev']  # Update this with your actual domain in production
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
